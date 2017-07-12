@@ -1,0 +1,10 @@
+
+
+{% block content %}
+	<h1>Delete category</h1>
+	<form action="" method="POST" class="category-form">{% csrf_token %}
+		<p>Are you sure you want to delete category "{{ object }} "?</p>
+		<input type="submit" value="Confirm" />
+		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+	</form>
+{% endblock %}

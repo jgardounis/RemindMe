@@ -1,0 +1,13 @@
+
+
+{% block content %}
+	<h1>New Category</h1>
+	<form method="POST" class="category-form">{% csrf_token %}
+		<p>{{ form.catname_text.label }} : {{ form.catname_text }}</p>
+		<p>{{ form.catdesc_text.label }} : {{ form.catdesc_text }}</p>
+		<p>{{ form.created_date.label }} : {{ form.created_date }}</p>
+		<br />
+		<input type="submit" value="Save" />
+		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+	</form>
+{% endblock %}

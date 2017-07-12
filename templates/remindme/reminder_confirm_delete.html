@@ -1,0 +1,10 @@
+
+
+{% block content %}
+	<h1>Delete reminder</h1>
+	<form action="" method="POST" class="reminder-form">{% csrf_token %}
+		<p>Are you sure you want to delete reminder "{{ object }} "?</p>
+		<input type="submit" value="Confirm" />
+		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+	</form>
+{% endblock %}

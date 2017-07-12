@@ -1,0 +1,16 @@
+{% block content %}
+<h1>Reminder: {{ reminder.remtitle_text}}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="" class="reminder-form" method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Update" />
+<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+<br />
+<br />
+</form>
+<a href="{% url 'reminders:results' reminder.category.id %}">Back to reminder listing</a>
+
+{% endblock %}

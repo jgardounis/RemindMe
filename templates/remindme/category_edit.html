@@ -1,0 +1,17 @@
+{% block content %}
+<h1>Category: {{ category.catname_text}}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="" class="category-form" method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Update" />
+<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+<br />
+<a href="{% url 'reminders:category_delete' pk=category.id %}"> Delete Category </a>
+<br />
+</form>
+<a href="{% url 'reminders:results' category.id %}">Back to category listing</a>
+
+{% endblock %}

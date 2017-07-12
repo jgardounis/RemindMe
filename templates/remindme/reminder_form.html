@@ -1,0 +1,10 @@
+
+
+{% block content %}
+	<h1>New Reminder</h1>
+	<form method="POST" class="reminder-form">{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Save" />
+		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
+	</form>
+{% endblock %}

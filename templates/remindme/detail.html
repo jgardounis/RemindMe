@@ -1,0 +1,12 @@
+<h1>Category: {{ category.catname_text}}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+{% for reminder in category.reminder_set.all %}
+	<li><a href="{% url 'reminders:reminder' reminder.id %}">{{reminder.remtitle_text}}</a></li>
+{% endfor %}
+</ul>
+   <br />
+<br />
+<a href="{% url 'reminders:index' %}">Back to category listing</a>

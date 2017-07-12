@@ -1,0 +1,18 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<p><a href="{% url 'reminders:reminder_new' %}"> Create New Reminder </a>||<a href="{% url 'reminders:category_new' %}"> Create New Category </a></p>
+{% if latest_category_list %}
+<h1>Reminder Categories</h1>
+	<ul>
+	{% for category in latest_category_list %}
+		<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No categories are available.</p>
+{% endif %}
