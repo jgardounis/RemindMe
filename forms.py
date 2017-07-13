@@ -26,20 +26,22 @@ class CategoryForm(forms.ModelForm):
 	created_date = forms.DateField(input_formats=['%d-%m-%Y'])
 	#catname_text.label = 'Name'
 	
-	def __init__(self, *args, **kwargs):
-		super(CategoryForm, self).__init__(*args, **kwargs)
-		self.fields['catname_text'].label = "Name"
+	#def __init__(self, *args, **kwargs):
+	#	super(CategoryForm, self).__init__(*args, **kwargs)
+	#	self.fields['catname_text'].label = "Name"
 	
 	def clean(self):
-		cleaned_data = self.cleaned_data
+		cleaned_data = super(CategoryForm, self).clean()
 		catname_text = cleaned_data.get('catname_text')
 		#catdesc_text = cleaned_data.get('catdesc_text')
 		
-		if catname_text:
-			if "Birthdays" in self.catname_text:
-				raise forms.ValidationError("OOh, Birthdays!!! I'd love me some cake")
-				
-		return self.cleaned_data
+		if catname_text and "Birthdays" in catname_text:
+			#raise forms.ValidationError("OOh, Birthdays!!! I'd love me some cake")
+			msg="OOh, Birthdays!!! I'd love me some cake"
+			self.add_error('catname_text', msg)
+			#raise ValidationError(msg)
+		else:	
+			return self.cleaned_data
 		
 	class Meta:
 		model = Category
