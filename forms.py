@@ -1,7 +1,8 @@
 from django import forms
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, TextInput, ChoiceField, Select
 from django.utils.translation import ugettext_lazy as _
-
+from django.core.validators import RegexValidator
+import re
 from .models import Reminder, Category
 
 class ReminderForm(forms.ModelForm):
@@ -19,21 +20,32 @@ class ReminderForm(forms.ModelForm):
 		
 
 class CategoryForm(forms.ModelForm):
-	catname_text = forms.CharField(label='Name')
-	catdesc_text = forms.CharField(max_length=200, required=False, help_text="Use puns liberally")
+	catname_text = forms.CharField(max_length=200)
+	catdesc_text = forms.CharField(widget=forms.Textarea, max_length=200, required=False, help_text="Use puns liberally")
 	created_date = forms.DateField(input_formats=['%d-%m-%Y'])
-
-	#def __init__(self, *args, **kwargs):
-		#super(CategoryForm, self).__init__(*args, **kwargs)
-		#self.fields['catname_text'].help_text = "The name of your category"
-		#self.fields['catname_text'].label = "Name"
+	#catname_text.label = 'Name'
 	
+	def __init__(self, *args, **kwargs):
+		super(CategoryForm, self).__init__(*args, **kwargs)
+		self.fields['catname_text'].label = "Name"
+	
+	def clean(self):
+		cleaned_data = super(CategoryForm, self).clean()
+		catname_text = cleaned_data['catname_text']
+		catdesc_text = cleaned_data['catdesc_text']
+		
+		if catname_text:
+			if "Birthdays" in catname_text:
+				raise forms.ValidationError("OOh, Birthdays!!! I'd love me some cake")
+		return cleaned_data
+		
 	class Meta:
 		model = Category
 		fields = ('catname_text', 'catdesc_text',)
 		labels = {
-			'catname_text': 'Name'
+			'catname_text': _('Name'), 'catdesc_text': _('Desc.'),
 			}
 		exclude = ('created_date',)
-		
-		
+		widgets = {
+			'catdesc_text': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+			}

@@ -1,9 +1,20 @@
 
 
 {% block content %}
+{{ form.non_field_errors }}
+<style>
+.errorlist {color: red; list-style-type: none;}
+</style>
 	<h1>New Reminder</h1>
 	<form method="POST" class="reminder-form">{% csrf_token %}
-		{{ form.as_p }}
+{% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.label_tag }} {{ field }}<span>{{ field.errors }}</span>
+        {% if field.help_text %}
+        {{ field.help_text|safe }}
+        {% endif %}
+    </div>
+{% endfor %}
 		<input type="submit" value="Save" />
 		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
 	</form>

@@ -1,12 +1,36 @@
 
-
 {% block content %}
+{% if form.non_field_errors %}
+
+  {% for err in form.non_field_errors %}
+  
+{{ err }}
+
+  {% endfor %}
+  
+{% endif %}
+
+{% for hidden in form.hidden_fields %}
+   {{ hidden }}
+{% endfor %}
+
+<style>
+.errorlist {color: red; list-style-type: none;}
+ul.errorlist {margin-top: 0px; margin-bottom: 0px;}
+</style>
+
+<br />
 	<h1>New Category</h1>
 	<form method="POST" class="category-form">{% csrf_token %}
-		<p>{{ form.catname_text.label }} : {{ form.catname_text }}</p>
-		<p>{{ form.catdesc_text.label }} : {{ form.catdesc_text }}</p>
-		<p>{{ form.created_date.label }} : {{ form.created_date }}</p>
-		<br />
+	
+{% for field in form %}
+    <div class="fieldWrapper">    
+        {{ field.label }} <br />
+		{{ field }} <span style="padding-left: 10px; width:200px; height:20px; display: inline-block;"><span style="color: red;">{% for err in field.errors %} {{ err }} {% endfor %}</span> {% if field.help_text %}
+        [i]:{{ field.help_text|safe }}
+        {% endif %}</span>  
+    </div>
+{% endfor %}
 		<input type="submit" value="Save" />
 		<input type="button" value="Cancel" onclick="window.history.go(-1);"/>
 	</form>
