@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm, TextInput, ChoiceField, Select
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 import re
 from .models import Reminder, Category
 
@@ -30,14 +31,15 @@ class CategoryForm(forms.ModelForm):
 		self.fields['catname_text'].label = "Name"
 	
 	def clean(self):
-		cleaned_data = super(CategoryForm, self).clean()
-		catname_text = cleaned_data['catname_text']
-		catdesc_text = cleaned_data['catdesc_text']
+		cleaned_data = self.cleaned_data
+		catname_text = cleaned_data.get('catname_text')
+		#catdesc_text = cleaned_data.get('catdesc_text')
 		
 		if catname_text:
-			if "Birthdays" in catname_text:
+			if "Birthdays" in self.catname_text:
 				raise forms.ValidationError("OOh, Birthdays!!! I'd love me some cake")
-		return cleaned_data
+				
+		return self.cleaned_data
 		
 	class Meta:
 		model = Category

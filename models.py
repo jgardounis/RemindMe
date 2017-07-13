@@ -6,7 +6,7 @@ from django.utils import timezone
 # Create your models here.
 class Category(models.Model):
 	catname_text = models.CharField(max_length=200)
-	catdesc_text = models.TextField(max_length=200, null=True, blank=True, help_text="Use puns liberally")
+	catdesc_text = models.TextField(max_length=200, null=True, blank=True)
 	created_date = models.DateField(default=timezone.now)
 	delete_cat = models.BooleanField(default=0)
 	# ...
