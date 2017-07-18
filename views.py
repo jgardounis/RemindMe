@@ -57,13 +57,10 @@ class category_new(CreateView):
 	model = Category
 	#fields = ['catname_text', 'catdesc_text', 'created_date']
 	template_name = 'remindme/category_form.html'
-	success_url = 'remindme/category_form.html'
 	form_class = CategoryForm
 	
-	def get_object(self):
-		object = super(category_edit, self).get_object()
-		return object
-		
+	def get_success_url(self):
+		return reverse_lazy('reminders:results', args=(self.object.pk,))
 	
 	def form_valid(self, form):
 		f = form.save(commit=False)
