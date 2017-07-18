@@ -17,6 +17,7 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DeleteView
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 #from django.urls import reverse_lazy
 from RemindMe.models import Reminder, Category
 
@@ -25,8 +26,18 @@ from .forms import ReminderForm, CategoryForm
 from .models import Category, Reminder
 
 
+#class index(ListView):
+#	model = Category
+#	template_name = 'remindme/index.html'
+	
+#	def get_context_data(self, **kwargs):
+#		context = super(index, self).get_context_data(**kwargs)
+#		latest_category_list = get_list_or_404(Category.objects.order_by('-created_date')[:15])
+#		return HttpResponseRedirect(reverse('reminders: index'), args=('latest_category_list'))
+		#return context
+	
 def index(request):
-	latest_category_list = get_list_or_404(Category.objects.order_by('-created_date')[:5])
+	latest_category_list = get_list_or_404(Category.objects.order_by('-created_date')[:15])
 	return render(request, 'remindme/index.html', {'latest_category_list': latest_category_list})
 
 def detail(request, category_id):
@@ -44,14 +55,25 @@ def reminder(request, reminder_id):
 
 class category_new(CreateView):
 	model = Category
-	fields = ['catname_text', 'catdesc_text', 'created_date']
+	#fields = ['catname_text', 'catdesc_text', 'created_date']
 	template_name = 'remindme/category_form.html'
+	success_url = 'remindme/category_form.html'
+	form_class = CategoryForm
+	
+	def get_object(self):
+		object = super(category_edit, self).get_object()
+		return object
+		
 	
 	def form_valid(self, form):
 		f = form.save(commit=False)
 		f.save()
-		return HttpResponseRedirect(reverse('reminders:results', args=(f.id,)))
-		
+		return super(category_new, self).form_valid(form)
+		#return super(reverse('results', args=[f.id]))
+		#return HttpResponseRedirect(reverse('reminders:results', args=(f.id,)))
+		#return HttpResponse("Success!")
+	
+	
 class category_edit(UpdateView):
 	model = Category
 	fields = ['catname_text', 'catdesc_text',]

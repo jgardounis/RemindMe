@@ -6,17 +6,17 @@
 {% csrf_token %}
 
 <label> Title : </label>
-<input type="text" name="remtitle" id="remtitle" value="{{ reminder.remtitle_text }}" /><input type="text" name="remid" id="remid" value="{{ reminder.id }}" />
+<input type="text" name="remtitle" disabled id="remtitle" value="{{ reminder.remtitle_text }}" /><input type="text" disabled name="remid" id="remid" value="{{ reminder.id }}" />
     <br />
 <label> Description : </label>
-<input type="text" name="remdesc" id="remdesc" value="{{ reminder.remdesc_text }}" />
+<input type="text" disabled name="remdesc" id="remdesc" value="{{ reminder.remdesc_text }}" />
     <br />
 <label> Category : </label>
-<input type="text" name="catname" id="catname" value="{{ reminder.category }}" />
-<input type="text" name="catid" id="catid" value="{{ reminder.category.id }}" />
+<input type="text" disabled name="catname" id="catname" value="{{ reminder.category }}" />
+<input type="text" disabled name="catid" id="catid" value="{{ reminder.category.id }}" />
     <br />
 <label> Date : </label>
-<input type="text" name="remdate" id="remdate" value="{{ reminder.rem_date }}" />
+<input type="text" disabled name="remdate" id="remdate" value="{{ reminder.rem_date }}" />
     <br />
 <!--<label> Created on : </label>
 <input type="text" name="remcreated" id="remcreated" value="{{ reminder.created_date }}" />-->

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from RemindMe.views import reminder_new, reminder_edit, reminder_delete, category_new, category_edit, category_delete
+from RemindMe.views import reminder_new, reminder_edit, reminder_delete, category_new, category_edit, category_delete#, index
 
 
 from . import views
@@ -8,6 +8,7 @@ app_name = 'reminders'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+	#url(r'^$', index.as_view(), name='index'),
 	url(r'^(?P<category_id>[0-9]+)/detail/$', views.detail, name='detail'),
 	url(r'^category(?P<category_id>[0-9]+)/results/$', views.results, name='results'),
 	url(r'^reminder(?P<reminder_id>[0-9]+)/details/$', views.reminder, name='reminder'),
