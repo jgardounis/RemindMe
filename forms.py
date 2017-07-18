@@ -34,16 +34,16 @@ class CategoryForm(forms.ModelForm):
 	
 	def clean(self):
 		cleaned_data = self.cleaned_data
-		catname_text = cleaned_data.get("catname_text")
-		#catdesc_text = cleaned_data.get("catdesc_text")
+		catname = cleaned_data.get("catname_text")
+		catdesc = cleaned_data.get("catdesc_text")
 		
-		if cleaned_data['catname_text'] and "Birthdays" in cleaned_data['catname_text']:
+		if catname and catdesc and "Birthdays" in catname:
 			raise forms.ValidationError("OOh, Birthdays!!! I'd love me some cake")
 		#	msg="OOh, Birthdays!!! I'd love me some cake"
 			#self.add_error('catname_text', msg)
 			#raise forms.ValidationError(msg)
 		#else:	
-			return self.cleaned_data
+		return self.cleaned_data
 		
 	class Meta:
 		model = Category
