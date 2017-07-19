@@ -1,5 +1,6 @@
 from django.contrib import admin
-
+import datetime
+from django.utils import timezone
 # Register your models here.
 from .models import Category, Reminder
 
@@ -10,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 	('Category details',	{'fields': ['catdesc_text', 'created_date']}),
 	('Delete category ?',	{'fields': ['delete_cat'], 'classes': ['collapse']}),
 	]
-	list_display = ('catname_text', 'created_date', 'was_created_recently')	
+	list_display = ('catname_text', 'created_date')#, 'was_created_recently')	
 	list_filter = ['created_date']
 	search_fields = ['catname_text']
 	

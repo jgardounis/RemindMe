@@ -7,13 +7,12 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('RemindMe', '0012_auto_20170718_1514'),
+        ('RemindMe', '0002_auto_20170719_1217'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='category',
-            name='catname_text',
-            field=models.CharField(max_length=200),
+        migrations.AlterModelOptions(
+            name='category',
+            options={'verbose_name': 'Category', 'verbose_name_plural': 'Categories'},
         ),
     ]

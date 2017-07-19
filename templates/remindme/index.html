@@ -1,5 +1,5 @@
 <p><a href="{% url 'reminders:reminder_new' %}"> Create New Reminder </a>||<a href="{% url 'reminders:category_new' %}"> Create New Category </a></p>
-{% if latest_category_list %}
+
 <h1>Reminder Categories</h1>
 {% if messages %}
 <ul class="messages">
@@ -9,10 +9,11 @@
 </ul>
 {% endif %}
 	<ul>
+	{% if latest_category_list %}
 	{% for category in latest_category_list %}
 		<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a> created on {{category.created_date}}</li>
 	{% endfor %}
 	</ul>
-{% else %}
+	{% else %}
 	<p>No categories are available.</p>
-{% endif %}
+	{% endif %}

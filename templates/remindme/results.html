@@ -6,10 +6,14 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <ul>
+{% if reminder %}
 {% for reminder in category.reminder_set.all %}
 	<li><a href="{% url 'reminders:reminder' reminder.id %}">{{reminder.remtitle_text}}</a></li>
 {% endfor %}
 </ul>
+{% else %}
+	<p>No reminders are available in this category.</p>
+	{% endif %}
    <br />
 <br />
 <a href="{% url 'reminders:index' %}">Back to category listing</a>

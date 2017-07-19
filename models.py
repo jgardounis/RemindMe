@@ -2,14 +2,20 @@ import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class Category(models.Model):
-	catname_text = models.CharField(max_length=200)
-	catdesc_text = models.TextField(max_length=200, null=True, blank=True)
-	created_date = models.DateField(default=timezone.now)
+	catname_text = models.CharField(max_length=200, verbose_name='Name')
+	catdesc_text = models.TextField(max_length=200, null=True, blank=True, verbose_name='Description')
+	created_date = models.DateField(default=timezone.now, verbose_name='Created on')
 	delete_cat = models.BooleanField(default=0)
 	# ...
+	class Meta:
+		verbose_name = 'Category'
+		verbose_name_plural = 'Categories'
+		#app_label = 'Remind Me!'
+	
 	def __str__(self):              # __unicode__ on Python 2
 		return self.catname_text
 		
@@ -21,6 +27,8 @@ class Category(models.Model):
 	
 	def get_absolute_url(self):
 		return reverse('results', kwargs={'pk': self.pk})
+	
+	
 
 class Reminder(models.Model):
 	category = models.ForeignKey(Category)

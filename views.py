@@ -37,7 +37,7 @@ from .models import Category, Reminder
 		#return context
 	
 def index(request):
-	latest_category_list = get_list_or_404(Category.objects.order_by('-created_date')[:15])
+	latest_category_list = Category.objects.all().order_by('-created_date')[:15]
 	return render(request, 'remindme/index.html', {'latest_category_list': latest_category_list})
 
 def detail(request, category_id):
