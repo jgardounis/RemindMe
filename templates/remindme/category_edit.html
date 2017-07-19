@@ -1,11 +1,37 @@
+
 {% block content %}
+{% if form.non_field_errors %}
+
+  {% for err in form.non_field_errors %}
+  
+{{ err }}
+
+  {% endfor %}
+  
+{% endif %}
+
+{% for hidden in form.hidden_fields %}
+   {{ hidden }}
+{% endfor %}
+
+<style>
+.errorlist {color: red; list-style-type: none;}
+ul.errorlist {margin-top: 0px; margin-bottom: 0px;}
+</style>
 <h1>Category: {{ category.catname_text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="" class="category-form" method="POST">
 {% csrf_token %}
-{{ form.as_p }}
+{% for field in form %}
+    <div class="fieldWrapper">    
+        {{ field.label }} <br />
+		{{ field }} <span style="padding-left: 10px; width:200px; height:20px; display: inline-block;"><span style="color: red;">{% for err in field.errors %} {{ err }} {% endfor %}</span> {% if field.help_text %}
+        [i]:{{ field.help_text|safe }}
+        {% endif %}</span>  
+    </div>
+{% endfor %}
 <input type="submit" value="Update" />
 <input type="button" value="Cancel" onclick="window.history.go(-1);"/>
 <br />

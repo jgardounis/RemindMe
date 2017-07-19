@@ -73,7 +73,7 @@ class category_new(CreateView):
 	
 class category_edit(UpdateView):
 	model = Category
-	fields = ['catname_text', 'catdesc_text',]
+	fields = ['catname_text', 'catdesc_text', 'created_date']
 	template_name = 'remindme/category_edit.html'
 	#form_class = forms.ReminderForm
 	

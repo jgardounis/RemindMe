@@ -10,7 +10,7 @@
 {% endif %}
 	<ul>
 	{% for category in latest_category_list %}
-		<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a></li>
+		<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a> created on {{category.created_date}}</li>
 	{% endfor %}
 	</ul>
 {% else %}
