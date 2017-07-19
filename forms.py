@@ -34,10 +34,19 @@ class CategoryForm(forms.ModelForm):
 		self.fields['catdesc_text'].label = "Description"
 		self.fields['created_date'].label = "Created date"
 	
+	#def clean_catnam(self):
+	#	catnam = self.cleaned_data['catname_text']
+	#	if Category.objects.filter(catnam=catnam).exists():
+	#		raise new forms.ValidationError('The name [%s] already exists' % catnam)    
+	#	return catnam
+	
 	def clean(self):
 		cleaned_data = self.cleaned_data
 		catname = cleaned_data.get("catname_text")
 		#catdesc = cleaned_data.get("catdesc_text")
+		
+		if Category.objects.filter(catname_text=catname).exists():
+			raise forms.ValidationError('The name [%s] already exists' % catname)
 		
 		if catname:
 			if "Birthdays" in catname:
