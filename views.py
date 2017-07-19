@@ -12,6 +12,7 @@ from django.contrib import messages
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -35,7 +36,11 @@ from .models import Category, Reminder
 #		latest_category_list = get_list_or_404(Category.objects.order_by('-created_date')[:15])
 #		return HttpResponseRedirect(reverse('reminders: index'), args=('latest_category_list'))
 		#return context
-	
+
+
+#def home(request):
+#    return HttpResponseRedirect(reverse(NAME_OF_PROFILE_VIEW, args=[request.user.username]))
+@login_required						   
 def index(request):
 	latest_category_list = Category.objects.all().order_by('-created_date')[:15]
 	return render(request, 'remindme/index.html', {'latest_category_list': latest_category_list})
