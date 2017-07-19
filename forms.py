@@ -23,7 +23,7 @@ class ReminderForm(forms.ModelForm):
 		
 
 class CategoryForm(forms.ModelForm):
-	catname_text = forms.CharField(label='Name')
+	catname_text = forms.CharField(max_length=200)
 	catdesc_text = forms.CharField(widget=forms.Textarea, max_length=200, required=False, help_text="Use puns liberally")
 	created_date = forms.DateField(input_formats=['%d/%m/%Y'], initial=datetime.datetime.now)
 	
@@ -53,6 +53,9 @@ class CategoryForm(forms.ModelForm):
 	class Meta:
 		model = Category
 		fields = ('catname_text', 'catdesc_text', 'created_date')
+		help_texts = {
+            'catdesc_text': _('Use puns liberally'),
+			}
 		labels = {
 			'catname_text': 'Name', 'catdesc_text': 'Desc.',
 			}
