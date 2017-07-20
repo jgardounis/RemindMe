@@ -103,12 +103,15 @@ class category_delete(DeleteView):
 		
 class reminder_new(CreateView):
 	model = Reminder
-	fields = ['remtitle_text', 'remdesc_text', 'rem_date', 'category',]
+	#fields = ['remtitle_text', 'remdesc_text', 'rem_date', 'category',]
 	template_name = 'remindme/reminder_form.html'
+	form_class = ReminderForm
 	
 	#def get(self, request, *args, **kwargs):
 	#	form = self.reminder-form(initial=self.initial)
 	#	return render(request, self.template_name, {'form':form})
+	def get_success_url(self):
+		return reverse_lazy('reminders:reminder', args=(self.object.pk,))
 	
 	def form_valid(self, form):
 		#form = self.ReminderForm(request.POST)
@@ -116,14 +119,15 @@ class reminder_new(CreateView):
 		#f.rem_date = timezone.now()
 		#f.created_date = timezone.now()
 		f.save()
-		return HttpResponseRedirect(reverse('reminders:reminder', args=(f.id,)))
+		#return HttpResponseRedirect(reverse('reminders:reminder', args=(f.id,)))
+		return super(reminder_new, self).form_valid(form)
 		
 
 class reminder_edit(UpdateView):
 	model = Reminder
-	fields = ['remtitle_text', 'remdesc_text', 'rem_date', 'category',]
+	#fields = ['remtitle_text', 'remdesc_text', 'rem_date', 'category',]
 	template_name = 'remindme/reminder_edit.html'
-	#form_class = forms.ReminderForm
+	form_class = ReminderForm
 	
 	def form_valid(self, form):
 		#form = self.ReminderForm(request.POST)

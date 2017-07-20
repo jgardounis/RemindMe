@@ -1,3 +1,6 @@
+
+{% block content %}
+<p>{% if not user.is_authenticated %}<a href="{% url 'login' %}"> Login </a>{% endif %}{% if user.is_authenticated %} Welcome {{ user.username }} || <a href="{% url 'logout' %}?next=/login/"> Logout </a>{% endif %}</p>
 <h1>Reminder: {{ reminder.remtitle_text}}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -6,14 +9,14 @@
 {% csrf_token %}
 
 <label> Title : </label>
-<input type="text" name="remtitle" disabled id="remtitle" value="{{ reminder.remtitle_text }}" /><input type="text" disabled name="remid" id="remid" value="{{ reminder.id }}" />
+<input type="text" name="remtitle" disabled id="remtitle" value="{{ reminder.remtitle_text }}" /><input type="text" disabled name="hidden" id="remid" value="{{ reminder.id }}" />
     <br />
 <label> Description : </label>
 <input type="text" disabled name="remdesc" id="remdesc" value="{{ reminder.remdesc_text }}" />
     <br />
 <label> Category : </label>
 <input type="text" disabled name="catname" id="catname" value="{{ reminder.category }}" />
-<input type="text" disabled name="catid" id="catid" value="{{ reminder.category.id }}" />
+<input type="hidden" disabled name="catid" id="catid" value="{{ reminder.category.id }}" />
     <br />
 <label> Date : </label>
 <input type="text" disabled name="remdate" id="remdate" value="{{ reminder.rem_date }}" />
@@ -22,10 +25,9 @@
 <input type="text" name="remcreated" id="remcreated" value="{{ reminder.created_date }}" />-->
 <br />
 <br />
-<a href="{% url 'reminders:reminder_edit' pk=reminder.id %}">Edit</a>
-<br />
-<a href="{% url 'reminders:reminder_delete' pk=reminder.id %}">Delete</a>
+<a href="{% url 'reminders:reminder_edit' pk=reminder.id %}">Edit</a> || <a href="{% url 'reminders:reminder_delete' pk=reminder.id %}">Delete</a>
 <br />
 <br />
 </form>
 <a href="{% url 'reminders:results' reminder.category.id %}">Back to reminder listing</a>
+{% endblock %}

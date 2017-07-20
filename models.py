@@ -32,10 +32,10 @@ class Category(models.Model):
 
 class Reminder(models.Model):
 	category = models.ForeignKey(Category)
-	remtitle_text = models.CharField(max_length=200)
-	remdesc_text = models.TextField(max_length=200, null=True, blank=True, help_text="Use puns liberally")
-	rem_date = models.DateField('reminder date')
-	created_date = models.DateField(default=timezone.now)
+	remtitle_text = models.CharField(max_length=200, verbose_name='Title')
+	remdesc_text = models.TextField(max_length=200, null=True, blank=True, help_text="Use puns liberally", verbose_name='Description')
+	rem_date = models.DateField(verbose_name='Reminder date')
+	created_date = models.DateField(default=timezone.now, verbose_name='Created on')
 	delete_rem = models.BooleanField(default=0)
 	# ...
 	def __str__(self):              # __unicode__ on Python 2

@@ -11,15 +11,26 @@ from .models import Reminder, Category
 class ReminderForm(forms.ModelForm):
 	#category = forms.ForeignKey(Category)
 	remtitle_text = forms.CharField(max_length=200)
-	remdesc_text = forms.CharField(max_length=200, required=False, help_text="Use puns liberally")
-	rem_date = forms.DateField(input_formats=['%d-%m-%Y'])
-	#created_date = forms.DateField(input_formats=['%d-%m-%Y'])
+	remdesc_text = forms.CharField(widget=forms.Textarea, max_length=200, required=False, help_text="Use puns liberally")
+	rem_date = forms.DateField(input_formats=['%d/%m/%Y'])
+	#created_date = forms.DateField(input_formats=['%d/%m/%Y'])
 	
+	def __init__(self, *args, **kwargs):
+		super(ReminderForm, self).__init__(*args, **kwargs)
+		self.fields['remtitle_text'].label = "Title"
+		self.fields['remdesc_text'].label = "Description"
+		self.fields['rem_date'].label = "Reminder date"
+		self.fields['category'].label = "Category"
+		self.fields['created_date'].label = "Created date"
 
 	class Meta:
 		model = Reminder
 		fields = ('remtitle_text', 'remdesc_text', 'rem_date', 'category', 'created_date',)
 		#exclude = ('created_date',)
+		widgets = {
+			'catdesc_text': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+			'rem_date': forms.DateInput(attrs={'class':'datepicker'}),
+			}
 		
 
 class CategoryForm(forms.ModelForm):

@@ -1,4 +1,4 @@
-<p>{% if not user.is_authenticated %}<a href="{% url 'login' %}"> Login </a>{% endif %}{% if user.is_authenticated %}<a href="{% url 'logout' %}?next=/login/"> Logout </a>{% endif %}</p>
+<p>{% if not user.is_authenticated %}<a href="{% url 'login' %}"> Login </a>{% endif %}{% if user.is_authenticated %} Welcome {{ user.username }} || <a href="{% url 'logout' %}?next=/login/"> Logout </a>{% endif %}</p>
 <p><a href="{% url 'reminders:reminder_new' %}"> Create New Reminder </a>||<a href="{% url 'reminders:category_new' %}"> Create New Category </a></p>
 
 <h1>Reminder Categories</h1>
@@ -11,10 +11,11 @@
 {% endif %}
 	<ul>
 	{% if latest_category_list %}
-	{% for category in latest_category_list %}
-		<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a> created on {{category.created_date}}</li>
-	{% endfor %}
-	</ul>
+		{% for category in latest_category_list %}
+			<li><a href="{% url 'reminders:results' category.id %}">{{category.catname_text}}</a> created on {{category.created_date}} by user...</li>
+		{% endfor %}
 	{% else %}
 	<p>No categories are available.</p>
+	</ul>
+	
 	{% endif %}
